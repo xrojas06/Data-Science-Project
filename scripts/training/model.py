@@ -2,7 +2,8 @@
 from feature_extract import y,X
 from keras.models import Sequential
 from keras.layers import Dense, LSTM, Dropout
-
+import mlflow
+import mlflow.keras
 # Create the LSTM Model
 model = Sequential([
     LSTM(256, return_sequences=False, input_shape=(40, 1)),  # LSTM layer with 256 units
@@ -36,3 +37,12 @@ print("The training accuracy and validation accuracy increases each iteration")
 print("Best validation accuracy is 72.32")
 print("Use checkpoint to save the best validation accuracy model")
 print("Adjust learning rate for slow convergence")
+
+
+mlflow.keras.log_model(model, "lstm_model")
+
+run_id = mlflow.active_run().info.run_id
+print(f"RUN_ID: {run_id}")
+
+with open("run_id.txt", "w") as f:
+    f.write(run_id)
