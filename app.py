@@ -12,6 +12,10 @@ def load_mlflow_model():
     global model
     model = mlflow.keras.load_model(f"runs:/{run_id}/lstm_model")
 
+@app.route('/')
+def home():
+    return "¡La aplicación está en línea!"
+
 if __name__ == '__main__':
     load_mlflow_model()
     app.run(debug=True)
